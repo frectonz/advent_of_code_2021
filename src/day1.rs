@@ -1,40 +1,21 @@
-use std::{fs::read_to_string, ops::Index};
+use crate::utils::count_increases;
+use crate::utils::get_readings;
 
-#[derive(PartialEq, Debug)]
-enum Changes {
-    Increased,
-    Decreased,
-}
+pub fn get_day1_answer() {
+    let readings = get_readings();
 
-pub fn get_answer() {
-    let data = read_to_string("data/day1.txt")
-        .unwrap()
-        .lines()
-        .map(|line| line.parse::<u32>().unwrap())
-        .collect::<Vec<u32>>();
+    println!("Day 1 Answer 1: {} increased", count_increases(&readings));
 
-    let mut last = data.index(1);
-    let mut changes: Vec<Changes> = Vec::with_capacity(data.len());
-
-    for current in data.iter().skip(1) {
-        match current {
-            current if current > last => {
-                last = current;
-                changes.push(Changes::Increased);
-            }
-            current if current < last => {
-                last = current;
-                changes.push(Changes::Decreased);
-            }
-            _ => continue,
-        }
-    }
-
-    let increases = changes
+    let measurements = readings
         .iter()
-        .filter(|c| **c == Changes::Increased)
-        .collect::<Vec<&Changes>>()
-        .len();
+        .enumerate()
+        .map(|(idx, num)| {
+            *num + *readings.get(idx + 1).unwrap_or(&0) + *readings.get(idx + 2).unwrap_or(&0)
+        })
+        .collect::<Vec<usize>>();
 
-    println!("Day 1 Answer: {} increased", increases);
+    println!(
+        "Day 1 Answer 2: {} increased",
+        count_increases(&measurements)
+    );
 }

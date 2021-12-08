@@ -1,7 +1,8 @@
 mod day1;
+mod utils;
 
-use day1::get_answer;
+use day1::get_day1_answer;
 
 fn main() {
-    get_answer();
+    get_day1_answer();
 }
