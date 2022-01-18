@@ -260,9 +260,7 @@ mod tests {
 21  9 14 16  7
  6 10  3 18  5
  1 12 20 15 19";
-        let board = Board::new(input);
-        let input = input.split("\n").collect::<Vec<&str>>().join("");
-
-        println!("{}", board);
+        let _board = Board::new(input);
+        let _input = input.split("\n").collect::<Vec<&str>>().join("");
     }
 }
